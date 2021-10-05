@@ -1,23 +1,29 @@
 #!/bin/ksh
 ###########################################################################
 # Created by  : Sangram Keshari Dash
-# Version     : 1.0
+# Version     : 2.0 - 05 OCT 2021
 # Description :skdcli (dcli Manual) : This script is inspired from dcli in Exadata
 #              You can run one command on all cluster nodes
 # Usage  1    :  sh skdcli.sh "ps -ef|grep smon"
-# Usage  2    :  sh skdcli.sh "Free -g"
+# Usage  2    :  sh skdcli.sh "free -g"
 # Usage  3    :  sh skdcli.sh "du -sh /u01"
+# Usage  3    :  clear
+
 ###########################################################################
 
-echo dollar one is $1
+#echo dollar one is $1
+outputfile="/tmp/cluster_hosts.txt"
 
-/u01/app/12.1.0.2/grid/bin/olsnodes -n |awk '{print $1}' > /tmp/sk_db_group.txt
+GRIDBINPATH=`ps -ef|grep cssdagent|grep bin|awk '{print $8}'`
+#echo $GRIDBINPATH
+#echo $GRIDBINPATH|  sed 's|\(.*\)/.*|\1|'
+GRIDBIN=`echo $GRIDBINPATH|  sed 's|\(.*\)/.*|\1|'`
+echo $GRIDBIN
 
-file="/tmp/sk_db_group.txt"
-
+$GRIDBIN/olsnodes -n |awk '{print $1}' > $outputfile
 echo ###########################################################################
 echo CLUSTER HOSTS ::
-cat $file
+cat $outputfile
 echo ###########################################################################
 
 while IFS= read line
@@ -30,7 +36,5 @@ echo HOST_NAME:::: $line
 echo ___________________
 ssh -n $line $1
 
-
-
 sleep 1
-done <"$file"
+done <"$outputfile"
