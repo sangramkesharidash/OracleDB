@@ -1,8 +1,8 @@
 PROMPT #####################################################################
-PROMPT #
 PROMPT # https://github.com/sangramkesharidash/OracleDB/blob/master/Oracle-DBA-LAB/
-PROMPT # sqlid360
-PROMPT # A Mini SQLHC
+PROMPT # sqlid360 SQL_ID Performance Details
+PROMPT # @sqlid360 <sqlid>
+PROMPT # 
 PROMPT # By : Sangram Keshari Dash
 PROMPT #####################################################################
 
